@@ -1,23 +1,31 @@
 # Third-party notices
 
-mulbit itself is licensed under [LICENSE.md](LICENSE.md).
+mulbit is freeware, Copyright © 2026 philaxis, licensed under [LICENSE.md](LICENSE.md). Third-party components retain their own licences.
 
-## Sound-trigger feature models
+- **Google speech_embedding v1 — Apache-2.0, Google.** Obtained directly from [Google's TF Hub module](https://tfhub.dev/google/speech_embedding/1?tf-hub-format=compressed), independently converted to ONNX; the log-mel frontend is implemented in Rust. [Official metadata](https://www.kaggle.com/api/v1/models/google/speech-embedding/get) specifies Apache 2.0. The original archive contains no NOTICE file. [Licence text](crates/sound-trigger/assets/LICENSE.Google), [provenance, modifications and hashes](crates/sound-trigger/assets/README.md).
+- **OpenAI Whisper large-v3-turbo — MIT** ([model card](https://huggingface.co/openai/whisper-large-v3-turbo), [licence](https://github.com/openai/whisper/blob/main/LICENSE)). **OpenAI whisper-small — Apache-2.0 per its [model card](https://huggingface.co/openai/whisper-small).** ONNX Community exports: [large-v3-turbo](https://huggingface.co/onnx-community/whisper-large-v3-turbo/tree/360ebcde2559d60bb474678be3c1de9ef347d01a), [small](https://huggingface.co/onnx-community/whisper-small/tree/36050c46d777d46dc4b5f43f6d90574fc38f8732). File sizes and SHA-256 values are pinned in `crates/local-asr/src/whisper.rs`.
+- **Microsoft ONNX Runtime 1.30.0 — MIT, Microsoft.** [Licence](https://github.com/microsoft/onnxruntime/blob/v1.30.0/LICENSE); DLLs come from the verified [Microsoft PyPI Windows wheel](https://pypi.org/project/onnxruntime/1.30.0/).
+- **Microsoft Visual C++ desktop runtime 14.0.33321.0 — Microsoft [C++ runtime licence terms](https://visualstudio.microsoft.com/license-terms/vs2022-cruntime/).** App-local runtime DLL archives, hashes and sizes are pinned in `crates/local-asr/src/lib.rs`.
+- **Rust crates and JavaScript development dependencies.** Tauri, tokio, tract-onnx, cpal, serde, rustfft, ort/ort-sys and other dependencies retain their upstream licences, predominantly MIT and/or Apache-2.0; `libloading` is ISC, `zip` is MIT, test-only `hound` is Apache-2.0. `cargo metadata`, `cargo tree` and the lockfiles identify exact versions; upstream source packages contain licence texts. Rust Kaldi-style fbank follows [kaldi-native-fbank](https://github.com/csukuangfj/kaldi-native-fbank) and [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) conventions (Apache-2.0); these native libraries are not shipped.
 
-The sound-trigger feature models come from [openWakeWord](https://github.com/dscripka/openWakeWord) v0.5.1. The embedding backbone is based on Google's [speech_embedding](https://www.kaggle.com/models/google/speech-embedding) model (Apache-2.0). The openWakeWord README states that its included pre-trained models are licensed under CC BY-NC-SA 4.0, so these files are for noncommercial use and will be replaced before any commercial licensing.
+ASR models and Microsoft runtime DLLs are downloaded at the user's request, rather than bundled. The Google feature model is embedded in the executable. Gemini uses the user's API key under [Gemini API Additional Terms](https://ai.google.dev/gemini-api/terms). Settings → Advanced → 오픈소스 고지 / Licenses displays model attribution and licence names.
 
-## Rust and JavaScript dependencies
+- **Lucide toolbar icons — ISC, Lucide Contributors; square and x also retain Feather’s MIT licence, Cole Bemis.** Settings, mic, square, folder, x and lightbulb SVG geometry from [Lucide 0.468.0](https://github.com/lucide-icons/lucide/tree/0.468.0), rendered with a shared stroke style.
 
-mulbit is built with Tauri, tokio, tract, cpal, tokio-tungstenite, serde and other crates under MIT and/or Apache-2.0 licenses. `cargo tree` lists the full dependency set; each crate's license ships with its source.
+```text
+ISC License
 
-## Speech recognition and runtime
+Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022.
 
-Gemini transcription uses your own API key, under the [Gemini API Additional Terms](https://ai.google.dev/gemini-api/terms).
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
-Local multilingual transcription uses **OpenAI Whisper Base**. Whisper's code and model weights are released under the **[MIT license](https://github.com/openai/whisper/blob/main/LICENSE)**, copyright (c) 2022 OpenAI. Model files are downloaded only at the user's request and are not bundled with mulbit.
-
-The [ONNX Community int8 export](https://huggingface.co/onnx-community/whisper-base/tree/1846881b6b3a3024392c1eea3ad983695bc23925) is pinned to revision `1846881b6b3a3024392c1eea3ad983695bc23925`. Rust feature extraction follows [Whisper's log-mel frontend](https://github.com/openai/whisper/blob/main/whisper/audio.py) and the Slaney filterbank used by [librosa](https://github.com/librosa/librosa) (ISC).
-
-The CPU runtime is **Microsoft ONNX Runtime 1.30.0**, [MIT license](https://github.com/microsoft/onnxruntime/blob/v1.30.0/LICENSE). Its two DLLs are extracted from Microsoft's pinned [PyPI Windows wheel](https://pypi.org/project/onnxruntime/1.30.0/) after archive and DLL verification; they are downloaded on request, not bundled. No Python installation is required. The same download extracts four app-local DLLs from Microsoft Visual C++ desktop runtime package 14.0.33321.0, under Microsoft’s [C++ runtime license terms](https://visualstudio.microsoft.com/license-terms/vs2022-cruntime/). These Microsoft DLLs are downloaded only at user request, not bundled in mulbit.
-
-Direct dependencies include `ort` / `ort-sys`, `rustfft`, `sha2` and `serde_json` (MIT OR Apache-2.0), `zip` (MIT), `libloading` (ISC), and the test/example-only WAV reader `hound` (Apache-2.0). Transitive dependencies and their licenses are identified by crate metadata.
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+```

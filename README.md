@@ -16,6 +16,8 @@
 
 **Stop, and it's typed.** Chat box, document or coding tool — right where your cursor was.
 
+**One key is enough.** Hold `G` to start, hold it again to stop. A quick tap still types g.
+
 **Your mouse becomes a keyboard.** Bind it to a spare mouse button. Press, talk, press again.
 
 **Start and stop with your own word.** Pick a word, say it, and it listens.
@@ -24,7 +26,7 @@
 
 1. Download with the button above and run it.
 2. The first time, it downloads a speech model.
-3. Press `Ctrl+Alt+Space`, talk, press again.
+3. Hold the `G` key, talk, then hold it again.
 
 ## Want it more accurate?
 
@@ -37,7 +39,7 @@ Add a Gemini API key in Settings to transcribe with Google's speech recognition.
 
 **Where do my text and voice go?** Transcripts are saved only on your PC, in `Documents\mulbit`. Your voice is not saved.
 
-**Can I change the hotkey?** Yes, in Settings. In your mouse software (Logitech etc.), assign that hotkey to a button.
+**Can I use a key other than G?** Yes, in Settings. You can also set a hotkey such as `Alt+Shift+V` and assign it to a mouse button in your mouse software (Logitech etc.).
 
 **Which Windows?** Windows 10 and 11.
 

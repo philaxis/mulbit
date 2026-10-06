@@ -1,0 +1,37 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mulbit 개인정보처리방침 · Privacy Policy</title>
+<style>body{font:16px/1.75 "Segoe UI","Malgun Gothic",sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#1d2430}h1{font-size:24px}h2{font-size:18px;margin-top:32px}hr{margin:40px 0;border:0;border-top:1px solid #d9dee6}small{color:#667}</style>
+<h1>mulbit 개인정보처리방침</h1>
+<small>시행일 2026-10-07 · 문의 philaxis.dev@gmail.com</small>
+<p>mulbit은 말한 내용을 글로 받아 적는 앱입니다(Windows, macOS, Linux, Android). 만든 사람은 사용자의 목소리나 받아쓴 글을 수집하지 않으며, 그것을 받아 볼 서버도 운영하지 않습니다.</p>
+<h2>기기 안에서 처리되는 것</h2>
+<p>"내 PC에서" 받아쓰기를 고르면 목소리는 기기 밖으로 나가지 않습니다. 받아쓴 글은 사용자가 고른 폴더에 Markdown 파일로 저장됩니다. API 키와 로그인 정보는 운영체제의 보안 저장소에 보관합니다.</p>
+<h2>사용자가 켰을 때만 외부로 나가는 것</h2>
+<ul>
+<li><b>Gemini로 받아쓰기</b>: 사용자가 자신의 Gemini API 키를 넣거나 "10초 체험"을 누르면, 그 녹음의 음성이 Google의 Gemini API로 전송되어 글로 바뀝니다. Google의 약관과 개인정보처리방침이 적용됩니다. 10초 체험은 횟수 제한을 위해 앱 설치마다 무작위로 만든 번호와 접속 IP를 되돌릴 수 없게 바꾼 값을 하루 동안 보관합니다. 음성과 글은 만든 사람의 서버를 거치지 않습니다.</li>
+<li><b>Google Drive 연동</b>: 사용자가 "Google Drive에 로그인"을 누르면, 받아쓴 기록 파일을 사용자 본인의 Google Drive에 있는 mulbit 폴더와 주고받습니다. 앱이 요청하는 권한은 <code>drive.file</code> 하나로, <b>mulbit이 만든 파일만</b> 읽고 쓸 수 있으며 드라이브의 다른 파일은 볼 수 없습니다. 파일은 사용자의 기기와 사용자의 Google Drive 사이에서만 오가고, 만든 사람에게 전달되지 않습니다. 계정 이메일 주소는 "연결된 계정"을 화면에 보여 주는 데만 씁니다. 연결 해제를 누르면 앱에 저장된 로그인 정보가 지워지고 권한이 취소됩니다.</li>
+</ul>
+<h2>앱이 스스로 하는 접속</h2>
+<p>앱은 하루에 한 번 사용 팁 목록을 받아 옵니다. 이때 보내는 내용은 없으며, 일반적인 웹 접속과 마찬가지로 접속 기록(IP 주소)이 서버 제공자(Cloudflare)에 남을 수 있습니다. 로컬 음성 모델은 사용자가 받기를 누를 때 공개 저장소에서 내려받습니다.</p>
+<h2>수집하지 않는 것</h2>
+<p>회원 가입, 광고 식별자, 사용 통계, 오류 자동 보고가 없습니다. 진단 기록은 사용자가 켰을 때 기기 안에만 저장되며, 사용자가 직접 공유하지 않는 한 어디로도 보내지 않습니다.</p>
+<h2>Google 사용자 데이터</h2>
+<p>mulbit이 Google API에서 받은 정보의 사용과 다른 앱으로의 전송은 <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API 서비스 사용자 데이터 정책</a>(제한적 사용 요건 포함)을 따릅니다. Google Drive의 데이터는 위에 적은 기록 연동 기능을 제공하는 데만 쓰고, 광고, 판매, 사람에 의한 열람, AI 모델 학습에 쓰지 않습니다.</p>
+<hr>
+<h1 lang="en">mulbit Privacy Policy</h1>
+<small>Effective 2026-10-07 · Contact philaxis.dev@gmail.com</small>
+<p lang="en">mulbit is a dictation app (Windows, macOS, Linux, Android). The author does not collect your voice or your transcripts and runs no server that receives them.</p>
+<h2 lang="en">Processed on your device</h2>
+<p lang="en">With on-device dictation your voice never leaves the device. Transcripts are saved as Markdown files in the folder you choose. API keys and sign-in tokens are kept in the operating system's secure store.</p>
+<h2 lang="en">Sent out only when you turn it on</h2>
+<ul lang="en">
+<li><b>Gemini dictation</b>: if you enter your own Gemini API key or press the "10-second trial", the audio of that recording is sent to Google's Gemini API to be transcribed, under Google's terms and privacy policy. To limit trial use, a random per-install number and an irreversibly hashed IP address are kept for one day. Audio and text do not pass through the author's server.</li>
+<li><b>Google Drive sync</b>: if you press "Sign in to Google Drive", your transcript files are exchanged with a mulbit folder in <i>your own</i> Google Drive. The only permission requested is <code>drive.file</code>: the app can read and write <b>only files created by mulbit</b> and cannot see anything else in your Drive. Files move only between your devices and your Google Drive; nothing is sent to the author. Your account email is used only to show which account is connected. "Disconnect" deletes the stored sign-in and revokes the permission.</li>
+</ul>
+<h2 lang="en">Connections the app makes by itself</h2>
+<p lang="en">Once a day the app fetches a list of usage tips. Nothing is sent, but as with any web request the hosting provider (Cloudflare) may log the IP address. On-device speech models are downloaded from public repositories when you choose to download them.</p>
+<h2 lang="en">Not collected</h2>
+<p lang="en">No accounts, advertising identifiers, analytics or automatic crash reports. Diagnostic logs are written only when you enable them, stay on the device, and go nowhere unless you share them yourself.</p>
+<h2 lang="en">Google user data</h2>
+<p lang="en">mulbit's use and transfer to any other app of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements. Google Drive data is used only to provide the history sync described above; it is not used for advertising, not sold, not read by humans, and not used to train AI models.</p>
+</html>

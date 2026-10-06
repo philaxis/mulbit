@@ -6,6 +6,8 @@
 
 <p align="center">말하면, 커서가 있는 자리에 글이 써집니다.</p>
 
+<p align="center"><a href="https://philaxis.github.io/mulbit/ko/">물빛 홈페이지에서 쓰는 모습 보기</a></p>
+
 ---
 
 **공짜입니다.** 받아서 켜면 끝. 가입도, 결제도 없습니다.

@@ -6,6 +6,8 @@
 
 <p align="center">Speak, and it types where your cursor is.</p>
 
+<p align="center"><a href="https://philaxis.github.io/mulbit/">See how it works on the mulbit website</a></p>
+
 ---
 
 **It's free.** Download, run, done. No account, no payment.

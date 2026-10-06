@@ -6,6 +6,8 @@
 
 <p align="center">说出的话，自动输入到光标处。</p>
 
+<p align="center"><a href="https://philaxis.github.io/mulbit/zh/">在 mulbit 网站上查看使用演示</a></p>
+
 ---
 
 **免费使用。** 下载后直接运行，无需注册或付费。

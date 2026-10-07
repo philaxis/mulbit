@@ -102,19 +102,33 @@ h1 em{font-style:normal;color:var(--accent)}
 /* demo: the markup at rest is the finished state; the script rewinds and plays it */
 .demo{min-width:0}
 .stage{padding:clamp(14px,2.6vw,26px);border-radius:22px;background:var(--stage);user-select:none}
+.stage-in{transition:opacity .35s ease}
+.demo[data-phase=out] .stage-in{opacity:0}
 .win{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:0 1px 2px rgb(10 20 30/.06),0 12px 28px -18px rgb(10 20 30/.35);overflow:hidden}
 .win-bar{display:flex;align-items:center;justify-content:space-between;height:34px;padding-inline:14px;border-bottom:1px solid var(--line);color:var(--ink-2);font-size:.75rem}
 .win-ctl{display:flex;gap:16px;align-items:center}
 .win-ctl i{display:block;width:9px;height:9px;border:1px solid currentColor;opacity:.7}
 .win-ctl i:first-child{height:0;border-width:1px 0 0}
 .win-ctl i:last-child{border:0;background:linear-gradient(45deg,transparent 46%,currentColor 46% 54%,transparent 54%),linear-gradient(-45deg,transparent 46%,currentColor 46% 54%,transparent 54%)}
-.win-body{min-height:10.6em;padding:16px 18px 50px;font-size:.9375rem;line-height:1.65}
+.win-body{min-height:11.8em;padding:16px 18px 50px;font-size:.9375rem;line-height:1.65}
 .doc-prev{color:var(--ink-2);margin-bottom:.5em}
 .landed{border-radius:3px}
 .caret{display:inline-block;width:2px;height:1.15em;margin-inline:1px;background:var(--accent);vertical-align:-.2em;animation:blink 1.1s steps(1) infinite}
 .caret-a{display:none}
 .deck{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:end;gap:clamp(12px,3vw,24px);padding-inline:clamp(6px,2vw,18px)}
+.dev{display:grid;justify-items:center;align-items:end}
+.dev>*{grid-area:1/1}
 .key{display:grid;gap:9px;justify-items:center;padding-block:12px 4px}
+.mouse{display:block;width:clamp(50px,14vw,62px);height:auto;margin-block:12px 4px;overflow:visible;visibility:hidden}
+.m-body,.m-side{fill:var(--surface);stroke:var(--ink-2);stroke-width:1.75}
+.m-line,.m-tick{fill:none;stroke:var(--ink-2);stroke-width:1.75;stroke-linecap:round}
+.m-tick{stroke:var(--accent);stroke-width:2;opacity:0;transition:opacity .15s}
+.m-side{transition:fill .12s,stroke .12s,transform .12s}
+.demo[data-scene=mouse] .mouse{visibility:visible}
+.demo[data-scene=mouse] .key{visibility:hidden}
+.demo[data-scene=mouse] .dev{order:2}
+.demo[data-scene=mouse] .deck{grid-template-columns:minmax(0,1fr) auto}
+.demo[data-scene=mouse] .mb{justify-self:start}
 .keycap{display:grid;place-items:center;width:clamp(48px,13vw,58px);aspect-ratio:1;border:1px solid var(--line);border-radius:13px;background:var(--surface);box-shadow:0 5px 0 var(--line),0 12px 18px -10px rgb(10 20 30/.4);color:var(--ink);font:650 clamp(1.25rem,4.5vw,1.5rem)/1 var(--display);transition:transform .12s ease,box-shadow .12s ease}
 .hold{display:block;width:100%;height:3px;border-radius:2px;background:var(--line);overflow:hidden}
 .hold i{display:block;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:left}
@@ -125,7 +139,8 @@ h1 em{font-style:normal;color:var(--accent)}
 .mb-level{flex:1;max-width:120px;height:5px;border-radius:3px;background:var(--mb-track);overflow:hidden}
 .mb-level i{display:block;height:100%;border-radius:3px;background:var(--mb-live);transform:scaleX(0);transform-origin:left}
 .mb-row svg{margin-left:auto}
-.mb-text{padding:8px 14px 13px;font-size:.8125rem;line-height:1.55;transition:opacity .3s}
+.mb-text{min-height:6.3em;padding:8px 14px 13px;font-size:.8125rem;line-height:1.55;transition:opacity .3s}
+@media (min-width:360px){.mb-text{min-height:4.8em}}
 .w{transition:opacity .22s ease}
 
 .demo.is-live:not([data-phase=done]) .landed{visibility:hidden}
@@ -135,28 +150,34 @@ h1 em{font-style:normal;color:var(--accent)}
 .demo.is-live .w.on{opacity:1}
 .demo[data-phase=done] .landed{animation:land 1.4s ease-out}
 .demo[data-phase=done] .mb-text{opacity:.5}
-.demo[data-phase=hold1] .keycap,.demo[data-phase=hold2] .keycap{transform:translateY(4px);box-shadow:0 1px 0 var(--line),0 4px 8px -6px rgb(10 20 30/.4)}
-.demo[data-phase=hold1] .hold i,.demo[data-phase=hold2] .hold i{transform:scaleX(1);transition:transform .6s linear}
-.demo[data-phase=rec] .mb-dot,.demo[data-phase=hold2] .mb-dot{background:var(--mb-live)}
-.demo[data-phase=rec] .mb-level i,.demo[data-phase=hold2] .mb-level i{animation:level 1.9s ease-in-out infinite}
+.demo[data-phase=press1] .keycap,.demo[data-phase=press2] .keycap{transform:translateY(4px);box-shadow:0 1px 0 var(--line),0 4px 8px -6px rgb(10 20 30/.4)}
+.demo[data-phase=press1] .hold i,.demo[data-phase=press2] .hold i{transform:scaleX(1);transition:transform .6s linear}
+.demo[data-phase=press1] .m-side,.demo[data-phase=press2] .m-side{fill:var(--accent);stroke:var(--accent);transform:translateX(2.5px)}
+.demo[data-phase=press1] .m-tick,.demo[data-phase=press2] .m-tick{opacity:1}
+.demo[data-phase=rec] .mb-dot,.demo[data-phase=press2] .mb-dot{background:var(--mb-live)}
+.demo[data-phase=rec] .mb-level i,.demo[data-phase=press2] .mb-level i{animation:level 1.9s ease-in-out infinite}
 .demo.is-paused *{animation-play-state:paused!important}
 @keyframes blink{50%{opacity:0}}
 @keyframes land{from{background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}to{background:transparent;box-shadow:0 0 0 3px transparent}}
 @keyframes level{0%{transform:scaleX(.18)}12%{transform:scaleX(.72)}24%{transform:scaleX(.4)}38%{transform:scaleX(.9)}50%{transform:scaleX(.33)}63%{transform:scaleX(.66)}76%{transform:scaleX(.25)}88%{transform:scaleX(.8)}100%{transform:scaleX(.18)}}
 
 .demo-cap{display:grid;gap:6px;margin-top:14px;padding-inline:4px;color:var(--ink-2);font-size:.9375rem}
-.steps{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;min-width:0}
+.steps-wrap{display:grid}
+.steps{grid-area:1/1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;min-width:0;transition:opacity .3s,visibility .3s}
+.s-mouse,.demo[data-scene=mouse] .s-key{visibility:hidden;opacity:0}
+.demo[data-scene=mouse] .s-mouse{visibility:visible;opacity:1}
+.cap-note{max-width:36em;font-size:var(--fs-small);text-wrap:balance}
 .steps li{display:flex;align-items:center;gap:10px;white-space:nowrap;transition:color .2s}
 .steps li:not(:last-child)::after{content:"";width:14px;height:1px;background:currentColor;opacity:.45}
 .cap-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:34px}
 .cap-row p{color:var(--ink);min-width:0}
 @media (max-width:420px){.demo-cap{font-size:.875rem}.steps{gap:4px 7px}.steps li{gap:7px}.steps li:not(:last-child)::after{width:9px}}
-.demo.is-live[data-phase=hold1] .steps li:nth-child(1),.demo.is-live[data-phase=rec] .steps li:nth-child(2),.demo.is-live[data-phase=hold2] .steps li:nth-child(3){color:var(--ink)}
+.demo.is-live[data-phase=press1] .steps li:nth-child(1),.demo.is-live[data-phase=rec] .steps li:nth-child(2),.demo.is-live[data-phase=press2] .steps li:nth-child(3){color:var(--ink)}
 .toggle{flex:none;display:inline-flex;align-items:center;gap:7px;min-height:32px;padding:4px 11px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink-2);font:inherit;font-size:var(--fs-small);cursor:pointer}
 .toggle:hover{color:var(--ink)}
 .toggle[hidden]{display:none}
 .toggle i{display:block;width:8px;height:10px;border-inline:2.5px solid currentColor}
-.toggle[aria-pressed=true] i{width:0;height:0;border:5px solid transparent;border-left:8px solid currentColor;border-right:0}
+.toggle.is-play i{width:0;height:0;border:5px solid transparent;border-left:8px solid currentColor;border-right:0}
 
 .section{margin-top:var(--section)}
 h2{font-size:var(--fs-h2);font-weight:650;line-height:1.2;letter-spacing:-.018em}
@@ -206,8 +227,17 @@ h3{font-size:1.125rem;font-weight:650;line-height:1.35}
 .end h2{font-size:clamp(1.625rem,1.2rem + 2vw,2.5rem)}
 
 @media (prefers-reduced-motion:reduce){
-  .caret,.demo .landed,.mb-level i{animation:none!important}
-  .btn,.keycap,.w,.hold i{transition:none!important}
+  /* the demo still plays, but only with fades: nothing slides, scales or pulses */
+  .caret,.demo .mb-level i{animation:none!important}
+  .demo .mb-level i{transform:scaleX(.62);opacity:0;transition:opacity .3s}
+  .demo[data-phase=rec] .mb-level i,.demo[data-phase=press2] .mb-level i{opacity:1}
+  .demo .keycap{transition:background-color .15s,border-color .15s}
+  .demo[data-phase=press1] .keycap,.demo[data-phase=press2] .keycap{transform:none;border-color:var(--accent);background:var(--accent-soft)}
+  .demo .hold i{transform:scaleX(1);opacity:0;transition:opacity .3s}
+  .demo[data-phase=press1] .hold i,.demo[data-phase=press2] .hold i{opacity:1;transition:opacity .3s}
+  .demo .m-side{transition:fill .15s,stroke .15s}
+  .demo[data-phase=press1] .m-side,.demo[data-phase=press2] .m-side{transform:none}
+  .btn{transition:none}
 }
 `;
 
@@ -225,20 +255,29 @@ const privacyCss = `
 
 /* ---------------------------------------------------------------- script */
 
-// Plays the hero demo. Without it (or with reduced motion) the page shows the finished state.
+// Plays the hero demo: one "moment" (sentence + app + trigger) per loop, then the next.
+// Without script the page shows the finished first moment. It autoplays for everyone (the
+// Pause button is always there); with reduced motion the CSS swaps movement for plain fades.
 const demoJs = `(function(){
-var d=document.querySelector('[data-demo]');
-if(!d||!window.matchMedia||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-var w=d.querySelectorAll('.w'),b=d.querySelector('.toggle'),l=b.querySelector('span'),s=[],i=0,t=0,user=false,away=false,n=w.length;
-function ph(p){return function(){d.setAttribute('data-phase',p);if(p==='idle')for(var k=0;k<n;k++)w[k].classList.remove('on')}}
+var d=document.querySelector('[data-demo]');if(!d)return;
+var M=JSON.parse(d.getAttribute('data-moments')),J=d.getAttribute('data-joiner'),
+q=function(x){return d.querySelector(x)},title=q('.win-title'),prev=q('.doc-prev'),land=q('.landed'),txt=q('.mb-text'),b=q('.toggle'),l=b.querySelector('span'),
+m=0,w=[],s=[],i=0,t=0,live=false,paused=false,away=false;
+function ph(p){return function(){d.setAttribute('data-phase',p)}}
 function word(k){return function(){w[k].classList.add('on')}}
-s.push([ph('idle'),800],[ph('hold1'),700],[ph('rec'),450]);
-for(var k=0;k<n;k++)s.push([word(k),k===n-1?600:Math.round(2500/n)]);
-s.push([ph('hold2'),700],[ph('done'),2900]);
-function run(){s[i][0]();t=setTimeout(function(){i=(i+1)%s.length;run()},s[i][1])}
-function sync(){var stop=user||away;clearTimeout(t);t=0;d.classList.toggle('is-paused',stop);if(!stop)t=setTimeout(function(){i=(i+1)%s.length;run()},350)}
-d.classList.add('is-live');b.hidden=false;run();
-b.addEventListener('click',function(){user=!user;b.setAttribute('aria-pressed',user);l.textContent=b.getAttribute(user?'data-play':'data-pause');sync()});
+function load(k){var x=M[k],n=x.w.length,g=x.t==='mouse'?380:700,j,e;m=k;
+d.setAttribute('data-scene',x.t);title.textContent=x.a;prev.textContent=x.p;land.textContent=x.w.join(J);txt.textContent='';w=[];
+for(j=0;j<n;j++){e=document.createElement('span');e.className='w';e.textContent=x.w[j];txt.appendChild(e);if(J&&j<n-1)txt.appendChild(document.createTextNode(J));w.push(e)}
+s=[[ph('idle'),800],[ph('press1'),g],[ph('rec'),450]];
+for(j=0;j<n;j++)s.push([word(j),j===n-1?600:Math.round(2500/n)]);
+s.push([ph('press2'),g],[ph('done'),2700],[ph('out'),400])}
+function label(){var p=!live||paused;l.textContent=b.getAttribute(p?'data-play':'data-pause');b.setAttribute('aria-label',b.getAttribute(p?'data-play-label':'data-pause-label'));b.classList.toggle('is-play',p)}
+function run(){s[i][0]();t=setTimeout(next,s[i][1])}
+function next(){if(++i>=s.length){load((m+1)%M.length);i=0;t=setTimeout(run,140)}else run()}
+function sync(){var h=paused||away;clearTimeout(t);t=0;d.classList.toggle('is-paused',h);if(live&&!h)t=setTimeout(next,350)}
+function start(){live=true;paused=false;d.classList.add('is-live');load(0);i=-1;label();sync()}
+b.addEventListener('click',function(){paused=!paused;label();sync()});
+b.hidden=false;start();
 function seen(v){if(away===!v)return;away=!v;sync()}
 if('IntersectionObserver' in window)new IntersectionObserver(function(e){seen(e[e.length-1].isIntersecting&&!document.hidden)},{threshold:.15}).observe(d);
 document.addEventListener('visibilitychange',function(){if(document.hidden)seen(false);else{var r=d.getBoundingClientRect();seen(r.bottom>0&&r.top<innerHeight)}});
@@ -249,6 +288,9 @@ document.addEventListener('visibilitychange',function(){if(document.hidden)seen(
 const icons = {
   download:
     '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2.5v9M5 8l4 4 4-4M3 15.5h12"/></svg>',
+  // top view of a mouse; .m-side is the thumb button on its left edge
+  mouse:
+    '<svg class="mouse" viewBox="-14 0 82 88" width="62" height="67"><path class="m-tick" d="M-4 33l-7-4M-5 44h-8M-4 55l-7 4"/><rect class="m-side" x="0" y="31" width="16" height="26" rx="6"/><rect class="m-body" x="9" y="2" width="50" height="84" rx="25"/><path class="m-line" d="M34 2v30M9 32.5h50"/><rect class="m-body" x="30.5" y="10" width="7" height="14" rx="3.5"/></svg>',
   mic: '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="5.75" y="1.5" width="4.5" height="8" rx="2.25"/><path d="M3 7.5a5 5 0 0 0 10 0M8 12.5v2"/></svg>',
 };
 
@@ -285,24 +327,26 @@ function cta(t) {
 
 function demo(t) {
   const d = t.demo;
-  const sentence = d.words.join(d.joiner);
-  const words = d.words.map((w) => `<span class="w">${esc(w)}</span>`).join(d.joiner);
-  const steps = d.stepsHtml.map((s) => `<li>${s}</li>`).join('');
-  return `<figure class="demo" data-demo>
-<div class="stage" aria-hidden="true">
+  const first = d.moments[0];
+  const words = first.words.map((w) => `<span class="w">${esc(w)}</span>`).join(d.joiner);
+  const li = (items) => items.map((x) => `<li>${x}</li>`).join('');
+  const moments = JSON.stringify(d.moments.map((m) => ({ t: m.trigger, a: m.app, p: m.prev, w: m.words })));
+  return `<figure class="demo" data-demo data-scene="${first.trigger}" data-joiner="${esc(d.joiner)}" data-moments="${esc(moments)}">
+<div class="stage" aria-hidden="true"><div class="stage-in">
 <div class="win">
-<div class="win-bar"><span>${esc(d.appTitle)}</span><span class="win-ctl"><i></i><i></i><i></i></span></div>
-<div class="win-body"><p class="doc-prev">${esc(d.prevLine)}</p><p><span class="caret caret-a"></span><span class="landed">${esc(sentence)}</span><span class="caret caret-b"></span></p></div>
+<div class="win-bar"><span class="win-title">${esc(first.app)}</span><span class="win-ctl"><i></i><i></i><i></i></span></div>
+<div class="win-body"><p class="doc-prev">${esc(first.prev)}</p><p><span class="caret caret-a"></span><span class="landed">${esc(first.words.join(d.joiner))}</span><span class="caret caret-b"></span></p></div>
 </div>
 <div class="deck">
-<div class="key"><span class="keycap">G</span><span class="hold"><i></i></span></div>
+<div class="dev"><div class="key"><span class="keycap">G</span><span class="hold"><i></i></span></div>${icons.mouse}</div>
 <div class="mb"><div class="mb-grip"></div><div class="mb-row"><span class="mb-dot"></span><span class="mb-level"><i></i></span>${icons.mic}</div><p class="mb-text">${words}</p></div>
 </div>
-</div>
+</div></div>
 <figcaption class="demo-cap">
-<ol class="steps">${steps}</ol>
+<div class="steps-wrap"><ol class="steps s-key">${li(d.keyStepsHtml)}</ol><ol class="steps s-mouse">${li(d.mouseStepsHtml)}</ol></div>
 <div class="cap-row"><p>${esc(d.result)}</p>
-<button class="toggle" type="button" hidden aria-pressed="false" aria-label="${esc(d.toggleLabel)}" data-pause="${esc(d.pause)}" data-play="${esc(d.play)}"><i></i><span>${esc(d.pause)}</span></button></div>
+<button class="toggle" type="button" hidden aria-label="${esc(d.pauseLabel)}" data-pause="${esc(d.pause)}" data-play="${esc(d.play)}" data-pause-label="${esc(d.pauseLabel)}" data-play-label="${esc(d.playLabel)}"><i></i><span>${esc(d.pause)}</span></button></div>
+<p class="cap-note">${esc(d.mouseNote)}</p>
 </figcaption>
 </figure>`;
 }

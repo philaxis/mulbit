@@ -39,7 +39,7 @@ p.lead{margin-top:28px;font-size:29px;line-height:1.5;color:#a3adba;text-wrap:ba
 .text{padding:14px 24px 24px;font-size:23px;line-height:1.5;color:#e8eaee;text-wrap:balance}
 </style>
 <div><div class="brand"><img src="${icon}" alt="">mulbit</div><h1>${t.h1Html}</h1><p class="lead">${esc(t.lead)}</p></div>
-<div class="vis"><div class="keycap">G</div><div class="mb"><div class="grip"></div><div class="row"><span class="dot"></span><span class="level"><i></i></span></div><div class="text">${esc(t.demo.words.join(t.demo.joiner))}</div></div></div>
+<div class="vis"><div class="keycap">G</div><div class="mb"><div class="grip"></div><div class="row"><span class="dot"></span><span class="level"><i></i></span></div><div class="text">${esc(t.demo.moments[0].words.join(t.demo.joiner))}</div></div></div>
 </html>`;
 
 const browser = await chromium.launch();

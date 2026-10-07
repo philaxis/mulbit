@@ -1,4 +1,4 @@
-[English](README.md) · [한국어](README.ko.md) · [中文](README.zh.md)
+<p align="center"><a href="README.md">English</a> · <a href="README.ko.md">한국어</a> · <a href="README.zh.md">中文</a></p>
 
 <p align="center"><img src="docs/icon.svg" width="96" alt="mulbit"></p>
 

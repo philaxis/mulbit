@@ -4,6 +4,8 @@
 
 <p align="center"><strong><a href="https://github.com/philaxis/mulbit/releases/latest/download/mulbit.exe">⬇ 下载 Windows 版 mulbit</a></strong></p>
 
+<p align="center">macOS 和 Linux：有<a href="https://philaxis.github.io/mulbit/zh/#other-platforms">测试版</a>，尚未在真实的 Mac 或 Linux 设备上运行过。</p>
+
 <p align="center">说出的话，自动输入到光标处。</p>
 
 <p align="center"><a href="https://philaxis.github.io/mulbit/zh/">在 mulbit 网站上查看使用演示</a></p>

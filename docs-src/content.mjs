@@ -4,12 +4,32 @@
 
 export const site = {
   base: 'https://philaxis.github.io/mulbit/',
-  download: 'https://github.com/philaxis/mulbit/releases/latest/download/mulbit.exe',
   repo: 'https://github.com/philaxis/mulbit',
   releases: 'https://github.com/philaxis/mulbit/releases',
   license: 'https://github.com/philaxis/mulbit/blob/main/LICENSE.md',
   email: 'philaxis.dev@gmail.com',
   lastmod: '2026-10-07',
+};
+
+// Downloads. Each OS has its own release and its own patch version under a shared
+// major.minor, so this is the one place to edit when a platform ships: change that
+// platform's `version` (shown next to its buttons; '' hides it) and its `url`s.
+export const platforms = {
+  windows: {
+    version: '', // the URL below always serves the newest Windows release
+    downloads: [{ label: 'mulbit.exe', url: 'https://github.com/philaxis/mulbit/releases/latest/download/mulbit.exe' }],
+  },
+  mac: {
+    version: '0.1.2 preview',
+    downloads: [{ label: '.dmg', url: 'https://github.com/philaxis/mulbit/releases/download/v0.1.2-preview-mac-linux/mulbit-mac-apple-silicon-preview.dmg' }],
+  },
+  linux: {
+    version: '0.1.2 preview',
+    downloads: [
+      { label: 'AppImage', url: 'https://github.com/philaxis/mulbit/releases/download/v0.1.2-preview-mac-linux/mulbit-linux-x86_64-preview.AppImage' },
+      { label: '.deb', url: 'https://github.com/philaxis/mulbit/releases/download/v0.1.2-preview-mac-linux/mulbit-linux-amd64-preview.deb' },
+    ],
+  },
 };
 
 // Order = order of the language switcher.
@@ -22,9 +42,9 @@ export const langs = {
     label: 'English',
     title: 'mulbit — Free voice typing keyboard for Windows (speech to text at your cursor)',
     description:
-      'mulbit is a free voice typing keyboard for Windows. Hold one key, speak, and your words are typed at the cursor in any app. No sign-up, no payment, works offline on your PC.',
+      'mulbit is a free voice typing keyboard for Windows. Hold one key, speak, and your words are typed at the cursor in any app. No sign-up, no payment, works offline on your PC. Beta builds for macOS and Linux are available.',
     keywords:
-      'voice typing, voice keyboard, speech to text, dictation software, free dictation, Windows voice typing, offline speech recognition, Whisper, Gemini',
+      'voice typing, voice keyboard, speech to text, dictation software, free dictation, Windows voice typing, offline speech recognition, Whisper, Gemini, Mac voice typing beta, Linux dictation beta',
     ogAlt: 'mulbit, a free voice typing keyboard for Windows: hold G, speak, and the text is typed at your cursor.',
     langNav: 'Language',
     h1Html: '<em>Free</em> voice typing keyboard for Windows',
@@ -32,6 +52,29 @@ export const langs = {
     cta: 'Download for Windows — free',
     ctaSub: 'One file. No installer, no account, no payment.',
     ctaMeta: 'Windows 10 and 11',
+    os: {
+      title: 'Windows, macOS and Linux',
+      also: 'Also in beta for macOS and Linux',
+      betaTag: 'Beta · not tested on a real device',
+      all: 'All platforms',
+      stable: 'Stable',
+      beta: 'Beta',
+      betaStatusHtml: 'The author has no Mac or Linux machine, so the beta builds have never been run on a real device. They have only passed automated build checks. If you try one, a note in <a href="https://github.com/philaxis/mulbit/issues">Issues</a> helps a lot.',
+      firstLaunch: 'First launch',
+      windows: { name: 'Windows', cta: 'Download for Windows', req: 'Windows 10 and 11' },
+      mac: {
+        name: 'macOS',
+        cta: 'Download for macOS — beta',
+        req: 'macOS 13.3 or later, Apple Silicon. Intel Macs are not supported yet.',
+        noteHtml: 'The app is not notarized. If macOS blocks it, open System Settings → Privacy &amp; Security and choose Open Anyway, or run <code>xattr -dr com.apple.quarantine /Applications/mulbit.app</code> in Terminal. The hold key and pasting need Accessibility and Input Monitoring permission.',
+      },
+      linux: {
+        name: 'Linux',
+        cta: 'Download for Linux — beta',
+        req: 'x86_64. X11 recommended.',
+        noteHtml: 'Full features need X11. On Wayland the hold key is unavailable, and pasting may fall back to asking you to press <kbd>Ctrl</kbd>+<kbd>V</kbd>.',
+      },
+    },
     // Each loop of the hero demo plays the next moment; triggers alternate key / mouse.
     // kind picks the mock app layout (mail form, chat thread, assistant prompt, checklist).
     // Keep sentences short: at most two lines in the floating window at phone width.
@@ -87,7 +130,8 @@ export const langs = {
     faq: [
       ['Is mulbit really free?', 'Yes. mulbit is freeware: free to download and use, with no account and no payment.'],
       ['Does it work offline?', 'Yes. With on-device recognition nothing is sent anywhere after the speech model has been downloaded once.'],
-      ['Which Windows versions are supported?', 'Windows 10 and 11. Untested preview builds for macOS and Linux are on the releases page.'],
+      ['Which Windows versions are supported?', 'Windows 10 and 11.'],
+      ['Does it work on Mac or Linux?', 'There are beta builds for macOS (Apple Silicon, macOS 13.3 or later) and Linux (x86_64). They have not been tested on a real Mac or Linux desktop yet, so expect problems. Intel Macs are not supported yet.'],
       ['Windows says the app is unrecognised.', 'The app is not code-signed yet. Choose “More info”, then “Run anyway”.'],
       ['Which languages can I dictate in?', 'Korean, English and Chinese are the focus, including mixed speech. The on-device model also understands many other languages.'],
       ['Do I have to use the G key?', 'No. You can bind the shortcut to a spare mouse button, or start and stop by saying a word you have enrolled yourself. A short press of G still types g.'],
@@ -107,9 +151,9 @@ export const langs = {
     label: '한국어',
     title: '물빛(mulbit) — 무료 음성 인식 키보드 · 말하면 커서 자리에 써지는 윈도우 받아쓰기',
     description:
-      '물빛(mulbit)은 무료 음성 인식 키보드입니다. 키 하나를 딸깍 누르고 말하면 어느 프로그램에서든 커서 자리에 글이 써집니다. 가입도 결제도 없고, 인터넷 없이 내 PC에서 받아씁니다.',
+      '물빛(mulbit)은 무료 음성 인식 키보드입니다. 키 하나를 딸깍 누르고 말하면 어느 프로그램에서든 커서 자리에 글이 써집니다. 가입도 결제도 없고, 인터넷 없이 내 PC에서 받아씁니다. Mac과 Linux용 베타도 있습니다.',
     keywords:
-      '음성 인식 키보드, 음성 타이핑, 받아쓰기 프로그램, 무료 받아쓰기, 말로 타이핑, 음성 입력, 윈도우 음성 인식, STT, 딕테이션, 물빛, mulbit',
+      '음성 인식 키보드, 음성 타이핑, 받아쓰기 프로그램, 무료 받아쓰기, 말로 타이핑, 음성 입력, 윈도우 음성 인식, STT, 딕테이션, 물빛, mulbit, Mac 음성 인식 키보드 베타, 맥 받아쓰기, Linux 음성 입력',
     ogAlt: '물빛(mulbit), 무료 음성 인식 키보드. G 키를 길게 누르고 말하면 커서 자리에 글이 써집니다.',
     langNav: '언어',
     h1Html: '<em>무료</em> 음성 인식 키보드, 물빛',
@@ -117,6 +161,29 @@ export const langs = {
     cta: 'Windows용 물빛 받기 — 무료',
     ctaSub: '파일 하나. 설치도, 가입도, 결제도 없습니다.',
     ctaMeta: 'Windows 10, 11',
+    os: {
+      title: 'Windows, macOS, Linux',
+      also: 'macOS · Linux 베타도 있습니다',
+      betaTag: '베타 · 실제 기기에서 시험하지 못했습니다',
+      all: '모든 운영체제 보기',
+      stable: '정식',
+      beta: '베타',
+      betaStatusHtml: '만든 사람에게 Mac과 Linux 기기가 없어 베타는 실제 기기에서 한 번도 실행해 보지 못했습니다. 자동 빌드 검사만 통과한 상태입니다. 써 보시고 <a href="https://github.com/philaxis/mulbit/issues">Issues</a>에 알려 주시면 큰 도움이 됩니다.',
+      firstLaunch: '처음 열 때',
+      windows: { name: 'Windows', cta: 'Windows용 받기', req: 'Windows 10, 11' },
+      mac: {
+        name: 'macOS',
+        cta: 'macOS용 물빛 받기 — 베타',
+        req: 'macOS 13.3 이상, Apple Silicon. Intel Mac은 아직 지원하지 않습니다.',
+        noteHtml: '공증을 받지 않은 앱입니다. macOS가 막으면 시스템 설정 → 개인정보 보호 및 보안에서 “그래도 열기”를 누르거나, 터미널에서 <code>xattr -dr com.apple.quarantine /Applications/mulbit.app</code>을 실행하세요. 길게 누르는 키와 붙여넣기에는 손쉬운 사용과 입력 모니터링 권한이 필요합니다.',
+      },
+      linux: {
+        name: 'Linux',
+        cta: 'Linux용 물빛 받기 — 베타',
+        req: 'x86_64. X11을 권장합니다.',
+        noteHtml: '모든 기능을 쓰려면 X11이 필요합니다. Wayland에서는 길게 누르는 키를 쓸 수 없고, 붙여넣기가 “<kbd>Ctrl</kbd>+<kbd>V</kbd>를 누르세요” 안내로 바뀔 수 있습니다.',
+      },
+    },
     demo: {
       moments: [
         { trigger: 'key', kind: 'mail', title: '새 메일', toLabel: '받는 사람', to: '박준호', subjectLabel: '제목', subject: '목요일 회의', greeting: '준호 님,', send: '보내기', words: ['회의는', '세', '시로', '옮겼습니다.', '초안은', '저녁에', '보낼게요.'] },
@@ -169,7 +236,8 @@ export const langs = {
     faq: [
       ['정말 무료인가요?', '네. 물빛은 무료 프로그램입니다. 가입이나 결제 없이 받아서 쓸 수 있습니다.'],
       ['인터넷 없이도 되나요?', '네. “내 PC에서” 받아쓰기는 음성 모델을 한 번 받은 뒤에는 아무것도 밖으로 보내지 않습니다.'],
-      ['어떤 Windows에서 되나요?', 'Windows 10과 11입니다. Mac과 Linux용은 실제 기기에서 시험하지 못한 미리보기가 릴리스 페이지에 있습니다.'],
+      ['어떤 Windows에서 되나요?', 'Windows 10과 11입니다.'],
+      ['Mac·Linux에서도 되나요?', 'macOS(Apple Silicon, macOS 13.3 이상)와 Linux(x86_64)용 베타가 있습니다. 아직 실제 Mac이나 Linux 기기에서 시험하지 못했으니 문제가 있을 수 있습니다. Intel Mac은 아직 지원하지 않습니다.'],
       ['Windows가 실행을 막아요.', '아직 서명이 없는 프로그램이라 처음에 경고가 뜹니다. “추가 정보” → “실행”을 누르세요.'],
       ['타자 대신 쓸 만한가요?', 'AI에게 길게 설명하거나 메신저 답장, 회의 메모처럼 말이 타자보다 빠른 일에 잘 맞습니다.'],
       ['어떤 말을 받아쓰나요?', '한국어, 영어, 중국어와 섞어 말하기를 받아씁니다. 내 PC에서 쓰는 모델은 다른 여러 언어도 알아듣습니다.'],
@@ -190,8 +258,8 @@ export const langs = {
     label: '中文',
     title: 'mulbit — 免费语音输入键盘 · 说话即可在光标处输入文字（Windows 语音转文字）',
     description:
-      'mulbit 是一款免费的 Windows 语音输入键盘。按住一个键说话，文字就会输入到任何软件的光标处。无需注册、无需付费，可在本机离线识别。',
-    keywords: '语音输入, 语音键盘, 语音转文字, 免费语音输入, 听写软件, Windows 语音输入, 离线语音识别, mulbit',
+      'mulbit 是一款免费的 Windows 语音输入键盘。按住一个键说话，文字就会输入到任何软件的光标处。无需注册、无需付费，可在本机离线识别。另有 macOS 和 Linux 测试版。',
+    keywords: '语音输入, 语音键盘, 语音转文字, 免费语音输入, 听写软件, Windows 语音输入, 离线语音识别, mulbit, Mac 语音输入 测试版, Linux 语音输入',
     ogAlt: 'mulbit，免费的 Windows 语音输入键盘：按住 G 说话，文字输入到光标处。',
     langNav: '语言',
     // .nb spans mark the only places where the headline may wrap
@@ -200,6 +268,29 @@ export const langs = {
     cta: '下载 Windows 版 mulbit — 免费',
     ctaSub: '只有一个文件。无需安装、注册或付费。',
     ctaMeta: 'Windows 10 / 11',
+    os: {
+      title: 'Windows、macOS 和 Linux',
+      also: '也有 macOS 和 Linux 测试版',
+      betaTag: '测试版 · 尚未在真机上测试',
+      all: '查看全部平台',
+      stable: '正式版',
+      beta: '测试版',
+      betaStatusHtml: '作者没有 Mac 和 Linux 设备，测试版从未在真机上运行过，只通过了自动构建检查。欢迎试用并在 <a href="https://github.com/philaxis/mulbit/issues">Issues</a> 中反馈，这会很有帮助。',
+      firstLaunch: '首次打开',
+      windows: { name: 'Windows', cta: '下载 Windows 版', req: 'Windows 10 / 11' },
+      mac: {
+        name: 'macOS',
+        cta: '下载 macOS 版 mulbit — 测试版',
+        req: 'macOS 13.3 及以上，Apple Silicon。暂不支持 Intel Mac。',
+        noteHtml: '应用未经公证。如果 macOS 阻止打开，请在“系统设置 → 隐私与安全性”中点击“仍要打开”，或在终端运行 <code>xattr -dr com.apple.quarantine /Applications/mulbit.app</code>。长按按键和粘贴需要“辅助功能”和“输入监控”权限。',
+      },
+      linux: {
+        name: 'Linux',
+        cta: '下载 Linux 版 mulbit — 测试版',
+        req: 'x86_64，建议使用 X11。',
+        noteHtml: '完整功能需要 X11。在 Wayland 下无法使用长按按键，粘贴可能改为提示你按 <kbd>Ctrl</kbd>+<kbd>V</kbd>。',
+      },
+    },
     demo: {
       moments: [
         { trigger: 'key', kind: 'mail', title: '新邮件', toLabel: '收件人', to: '林俊', subjectLabel: '主题', subject: '周四的会议', greeting: '小林：', send: '发送', words: ['会议', '改到', '三点了，', '初稿', '我', '今晚', '发给你。'] },
@@ -252,7 +343,8 @@ export const langs = {
     faq: [
       ['真的免费吗？', '是的。mulbit 是免费软件，无需注册和付费即可下载使用。'],
       ['可以离线使用吗？', '可以。本机识别在下载一次语音模型后，不会向外发送任何内容。'],
-      ['支持哪些 Windows 版本？', 'Windows 10 和 11。发布页还有未经实机测试的 macOS 和 Linux 预览版。'],
+      ['支持哪些 Windows 版本？', 'Windows 10 和 11。'],
+      ['Mac 和 Linux 能用吗？', '有 macOS（Apple Silicon，macOS 13.3 及以上）和 Linux（x86_64）的测试版。它们尚未在真实的 Mac 或 Linux 设备上测试过，可能存在问题。暂不支持 Intel Mac。'],
       ['Windows 阻止运行怎么办？', '应用尚未签名，首次运行会出现提示。点击“更多信息”→“仍要运行”。'],
       ['在中国大陆能用吗？', '可以。选择本机识别即可离线使用；语音模型下载失败时会自动改用镜像站。Gemini 需要能访问 Google 的网络。'],
       ['可以用哪些语言输入？', '支持中文、英语、韩语以及混合语言。本机模型还能识别许多其他语言。'],

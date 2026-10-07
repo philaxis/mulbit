@@ -4,6 +4,8 @@
 
 <p align="center"><strong><a href="https://github.com/philaxis/mulbit/releases/latest/download/mulbit.exe">⬇ Download mulbit for Windows</a></strong></p>
 
+<p align="center">macOS and Linux: <a href="https://philaxis.github.io/mulbit/#other-platforms">beta builds</a>, never yet run on a real Mac or Linux desktop.</p>
+
 <p align="center">Speak, and it types where your cursor is.</p>
 
 <p align="center"><a href="https://philaxis.github.io/mulbit/">See how it works on the mulbit website</a></p>

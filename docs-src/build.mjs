@@ -6,7 +6,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { langs, site } from './content.mjs';
+import { langs, platforms, site } from './content.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const out = join(here, '..', 'docs');
@@ -87,6 +87,11 @@ const homeCss = `
 .cta{display:grid;gap:12px;justify-items:start}
 .cta-sub{color:var(--ink-2);font-size:.9375rem;text-wrap:wrap}
 .cta-sub span{white-space:nowrap}
+.cta-tag{color:var(--ink);font-size:.9375rem;font-weight:600}
+.cta-mac .cta-sub,.cta-linux .cta-sub{max-width:30em;text-wrap:balance}
+.cta-more{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.9375rem}
+.cta-mac,.cta-linux,.os-mac .cta-win,.os-linux .cta-win{display:none}
+.os-mac .cta-mac,.os-linux .cta-linux{display:grid}
 
 .hero{display:grid;gap:clamp(36px,6vw,64px);align-items:center;padding-block:clamp(28px,5vw,72px) 0}
 .hero-copy{display:grid;gap:clamp(18px,2.4vw,26px);min-width:0}
@@ -268,6 +273,21 @@ h3{font-size:1.125rem;font-weight:650;line-height:1.35}
 .faq dt{font-weight:650}
 .faq dd{margin-top:4px;color:var(--ink-2);max-width:38em}
 
+.oses{border-top:1px solid var(--line)}
+.os{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:6px 16px;padding-block:18px;border-bottom:1px solid var(--line)}
+.os h3{display:flex;align-items:baseline;gap:10px}
+.os h3 small{color:var(--ink-2);font:400 var(--fs-small)/1.4 var(--sans)}
+.os-get{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px}
+.os>p,.os details{grid-column:1/-1;color:var(--ink-2);font-size:.9375rem;max-width:38em}
+.btn2{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:.9375rem;font-weight:600;line-height:1.3;text-decoration:none}
+.btn2:hover{border-color:var(--accent);color:var(--accent)}
+.btn2 svg{width:15px;height:15px;flex:none}
+.ver{color:var(--ink-2);font:var(--fs-small)/1.3 var(--mono);white-space:nowrap}
+.os summary{width:fit-content;color:var(--accent);cursor:pointer}
+.os details p{margin-top:6px}
+.os code{font:.86em var(--mono);padding:.1em .35em;border-radius:5px;background:var(--stage);overflow-wrap:anywhere}
+.os-status{padding-top:16px;color:var(--ink-2);font-size:.9375rem;max-width:38em}
+@media (max-width:480px){.os{grid-template-columns:minmax(0,1fr)}.os-get{justify-content:flex-start}}
 .end{display:grid;gap:22px;justify-items:start;padding:clamp(24px,5vw,56px);border-radius:22px;background:var(--stage)}
 .end h2{font-size:clamp(1.625rem,1.2rem + 2vw,2.5rem)}
 
@@ -328,6 +348,10 @@ if('IntersectionObserver' in window)new IntersectionObserver(function(e){seen(e[
 document.addEventListener('visibilitychange',function(){if(document.hidden)seen(false);else{var r=d.getBoundingClientRect();seen(r.bottom>0&&r.top<innerHeight)}});
 })();`;
 
+// Runs in <head>: picks the download variant before first paint, so nothing shifts later.
+// Phones and tablets (including iPadOS, which reports itself as a Mac) keep the default.
+const osJs = `(function(){var n=navigator,p=(n.userAgentData&&n.userAgentData.platform)||'',u=n.userAgent||'',o='';if(/Android|iPhone|iPad|iPod|CrOS/i.test(u)||/Android|iOS|Chrome OS/i.test(p)||(/Mac/i.test(u)&&n.maxTouchPoints>1))o='';else if(/mac/i.test(p)||/Macintosh|Mac OS X/i.test(u))o='mac';else if(/linux/i.test(p)||/Linux|X11/i.test(u))o='linux';if(o)document.documentElement.className+=' os-'+o})();`;
+
 /* ---------------------------------------------------------------- pieces */
 
 const icons = {
@@ -365,11 +389,49 @@ function footer(root, t) {
 </div></div></footer>`;
 }
 
+const ver = (p) => (p.version ? `<span class="ver">v${esc(p.version)}</span>` : '');
+
+// The download block comes in three variants. Windows shows by default; the script in
+// <head> sets .os-mac / .os-linux on <html> before first paint to swap in the matching beta.
 function cta(t) {
-  return `<div class="cta">
-<a class="btn" href="${site.download}">${icons.download}<span>${esc(t.cta)}</span></a>
-<p class="cta-sub">${esc(t.ctaSub)} <span>${esc(t.ctaMeta)}</span></p>
+  const o = t.os;
+  const win = platforms.windows.downloads[0].url;
+  const beta = (key) => `<div class="cta cta-${key}">
+<a class="btn" href="${platforms[key].downloads[0].url}">${icons.download}<span>${esc(o[key].cta)}</span></a>
+<p class="cta-tag">${esc(o.betaTag)}</p>
+<p class="cta-sub">${esc(o[key].req)}</p>
+<p class="cta-more"><a href="${win}">${esc(o.windows.cta)}</a><a href="#other-platforms">${esc(o.all)}</a></p>
 </div>`;
+  return `<div class="cta cta-win">
+<a class="btn" href="${win}">${icons.download}<span>${esc(t.cta)}</span></a>
+<p class="cta-sub">${esc(t.ctaSub)} <span>${esc(t.ctaMeta)}</span></p>
+<p class="cta-more"><a href="#other-platforms">${esc(o.also)}</a></p>
+</div>
+${beta('mac')}
+${beta('linux')}`;
+}
+
+function otherPlatforms(t) {
+  const o = t.os;
+  const row = (key, status) => {
+    const p = platforms[key];
+    const buttons = p.downloads.map((d) => `<a class="btn2" href="${d.url}">${icons.download}<span>${esc(d.label)}</span></a>`).join('');
+    const note = o[key].noteHtml ? `<details><summary>${esc(o.firstLaunch)}</summary><p>${o[key].noteHtml}</p></details>` : '';
+    return `<div class="os">
+<h3>${esc(o[key].name)} <small>${esc(status)}</small></h3>
+<div class="os-get">${buttons}${ver(p)}</div>
+<p>${esc(o[key].req)}</p>
+${note}</div>`;
+  };
+  return `<section class="section split" id="other-platforms" aria-labelledby="os">
+<h2 id="os">${esc(o.title)}</h2>
+<div class="oses">
+${row('windows', o.stable)}
+${row('mac', o.beta)}
+${row('linux', o.beta)}
+<p class="os-status">${o.betaStatusHtml}</p>
+</div>
+</section>`;
 }
 
 const winCtl = '<span class="win-ctl"><i></i><i></i><i></i></span>';
@@ -444,13 +506,13 @@ function jsonLd(code, t) {
         name: 'mulbit',
         alternateName: ['물빛', 'mulbit voice typing keyboard'],
         applicationCategory: 'UtilitiesApplication',
-        operatingSystem: 'Windows 10, Windows 11',
+        operatingSystem: 'Windows 10, Windows 11; macOS 13.3 or later on Apple Silicon (beta, not tested on a real device); Linux x86_64 (beta, not tested on a real device)',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         isAccessibleForFree: true,
         description: t.description,
         url: url(code),
         image: `${site.base}og-${code}.png`,
-        downloadUrl: site.download,
+        downloadUrl: platforms.windows.downloads[0].url,
         inLanguage: t.htmlLang,
         author: { '@type': 'Person', name: 'philaxis' },
       },
@@ -500,6 +562,7 @@ ${ogAlt}
 <meta name="theme-color" content="#f3f6f8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#101216" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="${root}icon.svg" type="image/svg+xml">
+<script>${osJs}</script>
 <script type="application/ld+json">${jsonLd(code, t)}</script>
 <style>${min(baseCss + homeCss)}</style>`;
 }
@@ -548,6 +611,7 @@ ${trust}
 ${how}
 </ol>
 </section>
+${otherPlatforms(t)}
 <section class="section split" aria-labelledby="faq">
 <h2 id="faq">${esc(t.faqTitle)}</h2>
 <dl class="faq">

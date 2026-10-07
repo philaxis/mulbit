@@ -4,6 +4,8 @@
 
 <p align="center"><strong><a href="https://github.com/philaxis/mulbit/releases/latest/download/mulbit.exe">⬇ Windows용 mulbit 받기</a></strong></p>
 
+<p align="center">macOS · Linux: <a href="https://philaxis.github.io/mulbit/ko/#other-platforms">베타</a>가 있습니다. 실제 Mac·Linux 기기에서는 아직 한 번도 실행해 보지 못했습니다.</p>
+
 <p align="center">말하면, 커서가 있는 자리에 글이 써집니다.</p>
 
 <p align="center"><a href="https://philaxis.github.io/mulbit/ko/">물빛 홈페이지에서 쓰는 모습 보기</a></p>

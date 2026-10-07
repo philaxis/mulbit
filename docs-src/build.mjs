@@ -103,15 +103,59 @@ h1 em{font-style:normal;color:var(--accent)}
 .demo{min-width:0}
 .stage{padding:clamp(14px,2.6vw,26px);border-radius:22px;background:var(--stage);user-select:none}
 .stage-in{transition:opacity .35s ease}
-.demo[data-phase=out] .stage-in{opacity:0}
-.win{border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:0 1px 2px rgb(10 20 30/.06),0 12px 28px -18px rgb(10 20 30/.35);overflow:hidden}
-.win-bar{display:flex;align-items:center;justify-content:space-between;height:34px;padding-inline:14px;border-bottom:1px solid var(--line);color:var(--ink-2);font-size:.75rem}
+.demo[data-phase=out] .stage-in{opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s .35s}
+.win{display:grid;border:1px solid var(--line);border-radius:12px;background:var(--surface);box-shadow:0 1px 2px rgb(10 20 30/.06),0 12px 28px -18px rgb(10 20 30/.35);overflow:hidden}
+.win-bar{flex:none;display:flex;align-items:center;justify-content:space-between;height:34px;padding-inline:14px;border-bottom:1px solid var(--line);color:var(--ink-2);font-size:.75rem}
 .win-ctl{display:flex;gap:16px;align-items:center}
 .win-ctl i{display:block;width:9px;height:9px;border:1px solid currentColor;opacity:.7}
 .win-ctl i:first-child{height:0;border-width:1px 0 0}
 .win-ctl i:last-child{border:0;background:linear-gradient(45deg,transparent 46%,currentColor 46% 54%,transparent 54%),linear-gradient(-45deg,transparent 46%,currentColor 46% 54%,transparent 54%)}
-.win-body{min-height:11.8em;padding:16px 18px 50px;font-size:.9375rem;line-height:1.65}
-.doc-prev{color:var(--ink-2);margin-bottom:.5em}
+/* four mock apps share one grid cell, so the window is always as tall as the tallest */
+.app{grid-area:1/1;display:flex;flex-direction:column;min-width:0;visibility:hidden;font-size:.875rem;line-height:1.55}
+.app.on{visibility:visible}
+.app-body{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0;padding:12px 16px 30px}
+.app small{color:var(--ink-2);font-size:.75rem}
+.line{min-width:0}
+/* mail: a compose form */
+.mail .app-body{gap:0;padding-top:4px}
+.mail-row{display:flex;align-items:baseline;gap:12px;padding-block:7px;border-bottom:1px solid var(--line)}
+.mail-row small{flex:none;min-width:4.4em}
+.mail-text{flex:1;display:grid;gap:3px;align-content:start;padding-block:10px 12px}
+.mail-send{align-self:flex-start;padding:3px 14px;border-radius:7px;background:var(--accent);color:var(--accent-ink);font-size:.75rem;font-weight:600}
+/* messenger: a thread with the cursor in the input bar */
+.chat .win-bar{height:42px;color:var(--ink);font-size:.8125rem;font-weight:600}
+.chat .win-ctl{color:var(--ink-2)}
+.who{display:flex;align-items:center;gap:8px}
+.av{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:.75rem;font-weight:700;font-style:normal}
+.chat .app-body{gap:10px;background:var(--bg)}
+.chat-msg{display:flex;align-items:flex-end;gap:8px}
+.chat-bub{max-width:78%;padding:6px 12px;border:1px solid var(--line);border-radius:14px 14px 14px 4px;background:var(--surface)}
+.chat-in{display:flex;align-items:flex-end;gap:8px;margin-top:auto;padding:6px 6px 6px 14px;border:1px solid var(--line);border-radius:19px;background:var(--surface)}
+.chat-in .line{flex:1;padding-block:2px}
+.chat-send{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink)}
+/* assistant: an answer with code above, a large prompt box below */
+.split-body{flex:1;display:flex;min-width:0}
+.rail{flex:none;display:grid;gap:9px;align-content:start;width:24%;max-width:118px;padding:14px 12px;border-right:1px solid var(--line);background:var(--bg)}
+.rail i{display:block;height:8px;border-radius:4px;background:var(--line)}
+.rail i:nth-child(2){width:70%}
+.rail i:nth-child(3){width:86%}
+.rail i:nth-child(4){width:55%}
+.ai .app-body{gap:6px}
+.ai-code{margin:0;padding:8px 11px;border-radius:9px;background:var(--stage);color:var(--ink);font:.75rem/1.55 var(--mono);white-space:pre;overflow:hidden}
+.ai-prompt{display:flex;align-items:flex-end;gap:8px;margin-top:auto;padding:9px 9px 9px 14px;border:1.5px solid var(--accent);border-radius:15px;background:var(--surface);box-shadow:0 0 0 3px var(--accent-soft)}
+.ai-prompt .line{flex:1;padding-block:2px}
+.ai-up{flex:none;display:grid;place-items:center;width:27px;height:27px;border-radius:9px;background:var(--ink);color:var(--surface)}
+/* notes: a list rail and a checklist */
+.notes .rail i{height:24px;border-radius:7px;width:100%;opacity:.55}
+.notes .rail i:first-child{background:var(--accent-soft);opacity:1}
+.note-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:2px}
+.note-head b{font:650 1.0625rem/1.3 var(--display)}
+.todo{display:flex;align-items:flex-start;gap:9px}
+.todo i{flex:none;position:relative;width:15px;height:15px;margin-top:.24em;border:1.5px solid var(--ink-2);border-radius:4px}
+.todo.done{color:var(--ink-2);text-decoration:line-through}
+.todo.done i{border-color:var(--accent);background:var(--accent)}
+.todo.done i::after{content:"";position:absolute;left:3.5px;top:.5px;width:4px;height:8px;border:solid var(--accent-ink);border-width:0 1.75px 1.75px 0;transform:rotate(45deg)}
+@media (max-width:560px){.rail{display:none}.app-body{padding-inline:14px}}
 .landed{border-radius:3px}
 .caret{display:inline-block;width:2px;height:1.15em;margin-inline:1px;background:var(--accent);vertical-align:-.2em;animation:blink 1.1s steps(1) infinite}
 .caret-a{display:none}
@@ -132,7 +176,7 @@ h1 em{font-style:normal;color:var(--accent)}
 .keycap{display:grid;place-items:center;width:clamp(48px,13vw,58px);aspect-ratio:1;border:1px solid var(--line);border-radius:13px;background:var(--surface);box-shadow:0 5px 0 var(--line),0 12px 18px -10px rgb(10 20 30/.4);color:var(--ink);font:650 clamp(1.25rem,4.5vw,1.5rem)/1 var(--display);transition:transform .12s ease,box-shadow .12s ease}
 .hold{display:block;width:100%;height:3px;border-radius:2px;background:var(--line);overflow:hidden}
 .hold i{display:block;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:left}
-.mb{justify-self:end;align-self:start;width:100%;margin-top:-28px;max-width:372px;border:1px solid var(--mb-line);border-radius:13px;background:var(--mb-bg);box-shadow:0 18px 36px -16px rgb(0 0 0/.6);color:var(--mb-ink);overflow:hidden}
+.mb{justify-self:end;align-self:start;width:100%;margin-top:-16px;max-width:372px;border:1px solid var(--mb-line);border-radius:13px;background:var(--mb-bg);box-shadow:0 18px 36px -16px rgb(0 0 0/.6);color:var(--mb-ink);overflow:hidden}
 .mb-grip{height:7px;background:#2c303b}
 .mb-row{display:flex;align-items:center;gap:10px;padding:11px 14px 0;color:var(--mb-ink-2)}
 .mb-dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--mb-ink-2);transition:background-color .2s}
@@ -157,7 +201,8 @@ h1 em{font-style:normal;color:var(--accent)}
 .demo[data-phase=rec] .mb-dot,.demo[data-phase=press2] .mb-dot{background:var(--mb-live)}
 .demo[data-phase=rec] .mb-level i,.demo[data-phase=press2] .mb-level i{animation:level 1.9s ease-in-out infinite}
 .demo.is-paused *{animation-play-state:paused!important}
-@keyframes blink{50%{opacity:0}}
+@keyframes level-soft{0%,100%{transform:scaleX(.34)}22%{transform:scaleX(.7)}45%{transform:scaleX(.48)}70%{transform:scaleX(.8)}}
+@keyframes blink{65%{opacity:0}}
 @keyframes land{from{background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}to{background:transparent;box-shadow:0 0 0 3px transparent}}
 @keyframes level{0%{transform:scaleX(.18)}12%{transform:scaleX(.72)}24%{transform:scaleX(.4)}38%{transform:scaleX(.9)}50%{transform:scaleX(.33)}63%{transform:scaleX(.66)}76%{transform:scaleX(.25)}88%{transform:scaleX(.8)}100%{transform:scaleX(.18)}}
 
@@ -227,10 +272,10 @@ h3{font-size:1.125rem;font-weight:650;line-height:1.35}
 .end h2{font-size:clamp(1.625rem,1.2rem + 2vw,2.5rem)}
 
 @media (prefers-reduced-motion:reduce){
-  /* the demo still plays, but only with fades: nothing slides, scales or pulses */
-  .caret,.demo .mb-level i{animation:none!important}
-  .demo .mb-level i{transform:scaleX(.62);opacity:0;transition:opacity .3s}
-  .demo[data-phase=rec] .mb-level i,.demo[data-phase=press2] .mb-level i{opacity:1}
+  /* the demo still plays, but with fades: no sliding keycap or mouse button, no blinking caret.
+     The small level bar keeps moving (more slowly), because it is the "listening" signal. */
+  .caret{animation:none!important}
+  .demo[data-phase=rec] .mb-level i,.demo[data-phase=press2] .mb-level i{animation:level-soft 2.8s ease-in-out infinite}
   .demo .keycap{transition:background-color .15s,border-color .15s}
   .demo[data-phase=press1] .keycap,.demo[data-phase=press2] .keycap{transform:none;border-color:var(--accent);background:var(--accent-soft)}
   .demo .hold i{transform:scaleX(1);opacity:0;transition:opacity .3s}
@@ -261,16 +306,16 @@ const privacyCss = `
 const demoJs = `(function(){
 var d=document.querySelector('[data-demo]');if(!d)return;
 var M=JSON.parse(d.getAttribute('data-moments')),J=d.getAttribute('data-joiner'),
-q=function(x){return d.querySelector(x)},title=q('.win-title'),prev=q('.doc-prev'),land=q('.landed'),txt=q('.mb-text'),b=q('.toggle'),l=b.querySelector('span'),
+q=function(x){return d.querySelector(x)},apps=d.querySelectorAll('.app'),txt=q('.mb-text'),b=q('.toggle'),l=b.querySelector('span'),
 m=0,w=[],s=[],i=0,t=0,live=false,paused=false,away=false;
 function ph(p){return function(){d.setAttribute('data-phase',p)}}
 function word(k){return function(){w[k].classList.add('on')}}
 function load(k){var x=M[k],n=x.w.length,g=x.t==='mouse'?380:700,j,e;m=k;
-d.setAttribute('data-scene',x.t);title.textContent=x.a;prev.textContent=x.p;land.textContent=x.w.join(J);txt.textContent='';w=[];
+d.setAttribute('data-scene',x.t);for(j=0;j<apps.length;j++)apps[j].classList.toggle('on',j===k);txt.textContent='';w=[];
 for(j=0;j<n;j++){e=document.createElement('span');e.className='w';e.textContent=x.w[j];txt.appendChild(e);if(J&&j<n-1)txt.appendChild(document.createTextNode(J));w.push(e)}
 s=[[ph('idle'),800],[ph('press1'),g],[ph('rec'),450]];
 for(j=0;j<n;j++)s.push([word(j),j===n-1?600:Math.round(2500/n)]);
-s.push([ph('press2'),g],[ph('done'),2700],[ph('out'),400])}
+s.push([ph('press2'),g],[ph('done'),2700],[ph('out'),450])}
 function label(){var p=!live||paused;l.textContent=b.getAttribute(p?'data-play':'data-pause');b.setAttribute('aria-label',b.getAttribute(p?'data-play-label':'data-pause-label'));b.classList.toggle('is-play',p)}
 function run(){s[i][0]();t=setTimeout(next,s[i][1])}
 function next(){if(++i>=s.length){load((m+1)%M.length);i=0;t=setTimeout(run,140)}else run()}
@@ -291,6 +336,8 @@ const icons = {
   // top view of a mouse; .m-side is the thumb button on its left edge
   mouse:
     '<svg class="mouse" viewBox="-14 0 82 88" width="62" height="67"><path class="m-tick" d="M-4 33l-7-4M-5 44h-8M-4 55l-7 4"/><rect class="m-side" x="0" y="31" width="16" height="26" rx="6"/><rect class="m-body" x="9" y="2" width="50" height="84" rx="25"/><path class="m-line" d="M34 2v30M9 32.5h50"/><rect class="m-body" x="30.5" y="10" width="7" height="14" rx="3.5"/></svg>',
+  send: '<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 2.5l12 5.5-12 5.5 2.2-5.5z"/></svg>',
+  up: '<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V3.5M3.8 7.5L8 3.3l4.2 4.2"/></svg>',
   mic: '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="5.75" y="1.5" width="4.5" height="8" rx="2.25"/><path d="M3 7.5a5 5 0 0 0 10 0M8 12.5v2"/></svg>',
 };
 
@@ -325,17 +372,45 @@ function cta(t) {
 </div>`;
 }
 
+const winCtl = '<span class="win-ctl"><i></i><i></i><i></i></span>';
+const rail = '<div class="rail"><i></i><i></i><i></i><i></i></div>';
+const code = 'async function upload(chunk) {\n  await api.put(chunk)\n}';
+
+// One mock app per moment. Each is recognisable by its layout, and each puts the caret
+// (and later the dictated sentence) where that kind of app takes text.
+function app(m, joiner, on) {
+  const line = `<p class="line"><span class="caret caret-a"></span><span class="landed">${esc(m.words.join(joiner))}</span><span class="caret caret-b"></span></p>`;
+  const open = `<div class="app ${m.kind}${on ? ' on' : ''}">`;
+  if (m.kind === 'mail')
+    return `${open}<div class="win-bar"><span>${esc(m.title)}</span>${winCtl}</div><div class="app-body">
+<div class="mail-row"><small>${esc(m.toLabel)}</small><span>${esc(m.to)}</span></div>
+<div class="mail-row"><small>${esc(m.subjectLabel)}</small><span>${esc(m.subject)}</span></div>
+<div class="mail-text"><p>${esc(m.greeting)}</p>${line}</div>
+<span class="mail-send">${esc(m.send)}</span></div></div>`;
+  if (m.kind === 'chat')
+    return `${open}<div class="win-bar"><span class="who"><i class="av">${esc(m.initial)}</i>${esc(m.name)}</span>${winCtl}</div><div class="app-body">
+<div class="chat-msg"><i class="av">${esc(m.initial)}</i><span class="chat-bub">${esc(m.incoming)}</span></div>
+<div class="chat-in">${line}<span class="chat-send">${icons.send}</span></div></div></div>`;
+  if (m.kind === 'ai')
+    return `${open}<div class="win-bar"><span>${esc(m.title)}</span>${winCtl}</div><div class="split-body">${rail}<div class="app-body">
+<small>${esc(m.answer)}</small><pre class="ai-code">${esc(code)}</pre>
+<div class="ai-prompt">${line}<span class="ai-up">${icons.up}</span></div></div></div></div>`;
+  const items = m.items.map((x, i) => `<div class="todo${i ? '' : ' done'}"><i></i><span>${esc(x)}</span></div>`).join('');
+  return `${open}<div class="win-bar"><span>${esc(m.title)}</span>${winCtl}</div><div class="split-body">${rail}<div class="app-body">
+<div class="note-head"><b>${esc(m.heading)}</b><small>${esc(m.date)}</small></div>${items}
+<div class="todo"><i></i>${line}</div></div></div></div>`;
+}
+
 function demo(t) {
   const d = t.demo;
   const first = d.moments[0];
   const words = first.words.map((w) => `<span class="w">${esc(w)}</span>`).join(d.joiner);
   const li = (items) => items.map((x) => `<li>${x}</li>`).join('');
-  const moments = JSON.stringify(d.moments.map((m) => ({ t: m.trigger, a: m.app, p: m.prev, w: m.words })));
+  const moments = JSON.stringify(d.moments.map((m) => ({ t: m.trigger, w: m.words })));
   return `<figure class="demo" data-demo data-scene="${first.trigger}" data-joiner="${esc(d.joiner)}" data-moments="${esc(moments)}">
 <div class="stage" aria-hidden="true"><div class="stage-in">
 <div class="win">
-<div class="win-bar"><span class="win-title">${esc(first.app)}</span><span class="win-ctl"><i></i><i></i><i></i></span></div>
-<div class="win-body"><p class="doc-prev">${esc(first.prev)}</p><p><span class="caret caret-a"></span><span class="landed">${esc(first.words.join(d.joiner))}</span><span class="caret caret-b"></span></p></div>
+${d.moments.map((m, i) => app(m, d.joiner, i === 0)).join('\n')}
 </div>
 <div class="deck">
 <div class="dev"><div class="key"><span class="keycap">G</span><span class="hold"><i></i></span></div>${icons.mouse}</div>

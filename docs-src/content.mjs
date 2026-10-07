@@ -33,13 +33,14 @@ export const langs = {
     ctaSub: 'One file. No installer, no account, no payment.',
     ctaMeta: 'Windows 10 and 11',
     // Each loop of the hero demo plays the next moment; triggers alternate key / mouse.
+    // kind picks the mock app layout (mail form, chat thread, assistant prompt, checklist).
     // Keep sentences short: at most two lines in the floating window at phone width.
     demo: {
       moments: [
-        { trigger: 'key', app: 'Mail', prev: 'Hi Jun,', words: ['The', 'meeting', 'moved', 'to', 'three.', "I'll", 'send', 'the', 'draft', 'tonight.'] },
-        { trigger: 'mouse', app: 'Messages', prev: 'Mina: Still on for seven?', words: ['Yes,', 'see', 'you', 'at', 'the', 'station', 'at', 'seven.'] },
-        { trigger: 'key', app: 'AI assistant', prev: 'What should I change?', words: ['Add', 'a', 'retry', 'to', 'the', 'upload', 'API', 'and', 'write', 'a', 'unit', 'test.'] },
-        { trigger: 'mouse', app: 'Notes', prev: 'To do', words: ['Renew', 'the', 'passport', 'and', 'call', 'the', 'dentist', 'by', 'Friday.'] },
+        { trigger: 'key', kind: 'mail', title: 'New message', toLabel: 'To', to: 'Jun Park', subjectLabel: 'Subject', subject: 'Thursday meeting', greeting: 'Hi Jun,', send: 'Send', words: ['The', 'meeting', 'moved', 'to', 'three.', "I'll", 'send', 'the', 'draft', 'tonight.'] },
+        { trigger: 'mouse', kind: 'chat', name: 'Mina', initial: 'M', incoming: 'Still on for seven?', words: ['Yes,', 'see', 'you', 'at', 'the', 'station', 'at', 'seven.'] },
+        { trigger: 'key', kind: 'ai', title: 'AI assistant', answer: 'Here is the upload handler.', words: ['Add', 'a', 'retry', 'to', 'the', 'upload', 'API', 'and', 'write', 'a', 'unit', 'test.'] },
+        { trigger: 'mouse', kind: 'notes', title: 'Notes', heading: 'To do', date: '7 October', items: ['Send the invoice', 'Book train tickets'], words: ['Renew', 'the', 'passport', 'and', 'call', 'the', 'dentist', 'by', 'Friday.'] },
       ],
       joiner: ' ',
       keyStepsHtml: ['Hold <kbd>G</kbd>', 'Speak', 'Hold <kbd>G</kbd> again'],
@@ -118,10 +119,10 @@ export const langs = {
     ctaMeta: 'Windows 10, 11',
     demo: {
       moments: [
-        { trigger: 'key', app: '메일', prev: '준호 님,', words: ['회의는', '세', '시로', '옮겼습니다.', '초안은', '저녁에', '보낼게요.'] },
-        { trigger: 'mouse', app: '메신저', prev: '민지: 오늘 7시 맞죠?', words: ['네,', '7시에', '역', '앞에서', '봬요.', '늦으면', '연락할게요.'] },
-        { trigger: 'key', app: 'AI 도우미', prev: '무엇을 고칠까요?', words: ['업로드', 'API에', 'retry', '넣고', 'unit', 'test도', '추가해', '줘.'] },
-        { trigger: 'mouse', app: '메모', prev: '할 일', words: ['금요일까지', '여권', '갱신하고', '치과', '예약하기.'] },
+        { trigger: 'key', kind: 'mail', title: '새 메일', toLabel: '받는 사람', to: '박준호', subjectLabel: '제목', subject: '목요일 회의', greeting: '준호 님,', send: '보내기', words: ['회의는', '세', '시로', '옮겼습니다.', '초안은', '저녁에', '보낼게요.'] },
+        { trigger: 'mouse', kind: 'chat', name: '민지', initial: '민', incoming: '오늘 7시 맞죠?', words: ['네,', '7시에', '역', '앞에서', '봬요.', '늦으면', '연락할게요.'] },
+        { trigger: 'key', kind: 'ai', title: 'AI 도우미', answer: '업로드 처리 코드입니다.', words: ['업로드', 'API에', 'retry', '넣고', 'unit', 'test도', '추가해', '줘.'] },
+        { trigger: 'mouse', kind: 'notes', title: '메모', heading: '할 일', date: '10월 7일', items: ['견적서 보내기', '기차표 예매하기'], words: ['금요일까지', '여권', '갱신하고', '치과', '예약하기.'] },
       ],
       joiner: ' ',
       keyStepsHtml: ['<kbd>G</kbd> 길게 누르기', '말하기', '다시 <kbd>G</kbd> 길게 누르기'],
@@ -201,10 +202,10 @@ export const langs = {
     ctaMeta: 'Windows 10 / 11',
     demo: {
       moments: [
-        { trigger: 'key', app: '邮件', prev: '小林：', words: ['会议', '改到', '三点了，', '初稿', '我', '今晚', '发给你。'] },
-        { trigger: 'mouse', app: '聊天', prev: '小美：今晚七点见吗？', words: ['好的，', '七点', '地铁站见，', '晚了', '我', '提前说。'] },
-        { trigger: 'key', app: 'AI 助手', prev: '需要修改什么？', words: ['给上传', ' API ', '加上', ' retry，', '再补', '一个', '单元测试。'] },
-        { trigger: 'mouse', app: '备忘', prev: '待办', words: ['周五之前', '续签护照，', '再预约', '牙医。'] },
+        { trigger: 'key', kind: 'mail', title: '新邮件', toLabel: '收件人', to: '林俊', subjectLabel: '主题', subject: '周四的会议', greeting: '小林：', send: '发送', words: ['会议', '改到', '三点了，', '初稿', '我', '今晚', '发给你。'] },
+        { trigger: 'mouse', kind: 'chat', name: '小美', initial: '美', incoming: '今晚七点见吗？', words: ['好的，', '七点', '地铁站见，', '晚了', '我', '提前说。'] },
+        { trigger: 'key', kind: 'ai', title: 'AI 助手', answer: '这是上传处理代码。', words: ['给上传', ' API ', '加上', ' retry，', '再补', '一个', '单元测试。'] },
+        { trigger: 'mouse', kind: 'notes', title: '备忘', heading: '待办', date: '10月7日', items: ['发送报价单', '订火车票'], words: ['周五之前', '续签护照，', '再预约', '牙医。'] },
       ],
       joiner: '',
       keyStepsHtml: ['按住 <kbd>G</kbd>', '说话', '再按住 <kbd>G</kbd>'],
